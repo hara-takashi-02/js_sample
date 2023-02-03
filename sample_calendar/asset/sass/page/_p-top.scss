@@ -1,0 +1,64 @@
+@use "../global"as g;
+
+/*================
+top
+ ================*/
+//indexPage
+.calendar{
+    max-width: 600px;
+    margin: 50px auto;
+    border: solid 1px #ccc;
+}
+.calendar_head{
+    display: flex;
+    justify-content: space-between;
+    border-bottom: solid 1px #ccc;
+
+    .prev,
+    .next{
+        width: 80px;
+        background-color: #ccc;
+        color: #fff;
+    }
+}
+.calendar_title{
+    text-align: center;
+
+}
+
+.dayOfWeek,
+.dayOfItems{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    li{
+        width: calc(100%/7);
+        text-align: center;
+        height: 80px;
+    }
+}
+.dayOfItems{
+li{
+    &:nth-of-type(7n+1){
+        color: red;
+    }
+    &:nth-of-type(7n){
+        color: blue;
+    }
+    &.disabled {
+        color: #ccc;
+    }
+    &.today {
+        background-color: #D65E72;
+        color: #fff;
+    }
+    &.holiday {
+        color: red;
+        p{
+            color: red;
+            font-size: 10px;
+        }
+    }
+}
+
+}

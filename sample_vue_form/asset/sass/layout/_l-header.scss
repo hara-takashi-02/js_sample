@@ -1,0 +1,23 @@
+@use "../global" as g;
+/*================
+ l-header
+ ================*/
+
+.l-header {
+    text-align: center;
+    padding: 1.5rem;
+    @include g.mq(md, min) {
+        //border-bottom: solid 1px #D8D8D8;
+    }
+    img{
+        max-width: 10rem;
+    }
+    .l-header__title{
+        font-size: 1rem;
+        margin-top: 1rem;
+        @include g.mq(md, min) {
+            font-size: 1.4rem;
+            margin-top: 0;
+        }
+    }
+}

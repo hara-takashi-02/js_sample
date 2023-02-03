@@ -1,0 +1,254 @@
+@use "../global"as g;
+/*================
+ stackedCards
+ ================*/
+ body {
+  overflow-x: hidden;
+}
+.l-wrap-recommend {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+    height: 100%;
+  margin: auto;
+    padding: 20px;
+    background-color: rgba(255,255,255,.95);
+    position: relative;
+
+}
+.stage {
+  opacity: 1;
+  transform: translateX(0px);
+}
+
+.s-wrap {
+  transform: rotate(-18deg);
+}
+.s-wrap .slide {
+  width: 465px;
+  position: absolute;
+}
+.card-image {
+  width: 100%;
+  height: 100%;
+}
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.card {
+  position: absolute;
+  transition: all 400ms ease;
+  background: #fff;
+  box-shadow: 0 6px 12px 0 rgba(0,0,0,0.30);
+  width: 100%;
+  height: 420px;
+  will-change: transform, opacity;
+  top: 0;
+  transform-origin: center center 0 !important;
+}
+.no-transition {
+  transition-property: translateX;
+  transition-duration: 0.1s !important;
+  transition-delay: 0s !important;
+  transition-timing-function: ease-out;
+}
+.stackedcards-overflow {
+  overflow-y: hidden !important;
+}
+.stackedcards.init {
+  opacity: 0;
+}
+.stackedcards {
+  position: relative;
+}
+.stackedcards * {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.stackedcards--animatable {
+  -webkit-transition: all 400ms ease;
+  -o-transition: all 400ms ease;
+  transition: all 400ms ease;
+}
+.stackedcards .stackedcards-container > *,
+.stackedcards-overlay {
+  position: absolute;
+  width: 100%;
+  will-change: transform, opacity;
+  top: 0;
+}
+.stackedcards-overlay.left > div,
+.stackedcards-overlay.right > div,
+.stackedcards-overlay.top > div {
+  width: 100%;
+  height: 100%;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+.stackedcards-overlay.left,
+.stackedcards-overlay.right,
+.stackedcards-overlay.top {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  left: 0;
+  opacity: 0;
+  top: 0;
+  height: 100%;
+}
+.stackedcards-origin-bottom {
+  -webkit-transform-origin: bottom;
+  -ms-transform-origin: bottom;
+  transform-origin: bottom;
+}
+.stackedcards-origin-top {
+  -webkit-transform-origin: top;
+  -ms-transform-origin: top;
+  transform-origin: top;
+}
+.stackedcards-top {
+  background: #fff;
+  box-shadow: 0 6px 12px 0 rgba(0,0,0,0.30);
+  height: 100%;
+}
+.stackedcards .stackedcards-container > :nth-child(1) {
+  position: relative;
+  display: block;
+}
+.stackedcards-hidden--right {
+  transform: translateX(2000px);
+}
+.stackedcards-hidden--left {
+  transform: translateX(-2000px);
+}
+.pager .play {
+  display: none !important;
+}
+/* nav */
+.is-disable {
+  pointer-events: none;
+  opacity: 0.3;
+}
+
+.profile-block .data {
+  opacity: 0;
+  position: absolute;
+  transition: .3s all ease-in;
+padding-right: 20px
+}
+.profile-block .active {
+  animation: fadeIn 1s 0s forwards;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+@keyframes fadeOut {
+  0% {
+    opacity:1;
+  }
+  100% {
+    opacity:0;
+  }
+}
+
+.mouseDown {
+  cursor: grab;
+}
+
+/* 追記 */
+#pickup {
+  padding: 60px 0 0;
+  overflow: hidden;
+  .title{
+    text-align: center;
+    font-weight: bold;
+  }
+}
+.pickup-inner {
+  max-width: 1161px;
+    padding: 20px;
+  margin: 0 auto;
+  position: relative;
+}
+#pickup .stage {
+  width: 40%;
+  padding-left: 40px;
+}
+#pickup .s-wrap {
+  width: 100%;
+}
+#pickup .pager {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  width: 11px;
+  height: 58px;
+}
+#pickup .pager .button {
+  width: 11px;
+  height: 12px;
+  text-indent: -9999px;
+  cursor: pointer;
+  position: absolute;
+}
+#pickup .pager .button.prev {
+  top: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 6px 10px 6px 0;
+    border-color: transparent #000 transparent transparent;
+}
+#pickup .pager .button.next {
+    bottom: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 6px 10px 6px 0;
+    border-color: transparent #000 transparent transparent;
+    transform: rotate(180deg);
+}
+#pickup .pager .stop {
+  text-indent: -9999px;
+}
+.pager .play {
+  display: none !important;
+}
+#pickup .profile-block {
+    width: 40%;
+    padding-top: 5px;
+}
+
+.profile-block .active{
+z-index: 1;
+}
+.profile-block .data .comment dd{
+  max-height: 320px;
+    overflow: auto;
+margin-top: 10px;
+    padding-right: 10px;
+}

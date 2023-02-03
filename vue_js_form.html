@@ -1,0 +1,191 @@
+<!-- 
+    VUE(cdn)を使ったフォームコンテンツ一例 
+
+    社内用
+-->
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.min.js"></script>
+
+<dl class="">
+    <dt><span class="required">必須</span>媒体名</dt>
+    <div class="topForm c-section" id="app">
+
+        <div class="">
+
+            <select name="data_medium_name" v-model="selectedItem" @change="showMessage2" class="w30 sp-w100 c-inline" required>
+                <option v-for="item in selectItems" :value="item.label">
+                    {{ item.label }}
+                </option>
+            </select>
+
+            <a class="selectReset" v-on:click="selectReset">リセット</a>
+
+            <div class="commonOther_input2" style="display
+            : none;">
+                <input tyep="text" name="data_bnr_size_others" value="" class="w60 sp-w100">
+                <span class="example">(例)〇〇社の〇〇プラン</span>
+            </div>
+
+            <ul class="checkItems">
+                <li v-for="item in filterCheckItems">
+                    <input name="data_bnr_size[]" type="checkbox" :value="item.label2" :id="'mplay'+item.id" data-score="" v-model="checkedItem" @change="change">
+                    <label :for="'mplay'+item.id" class="app_label label">
+                        {{item.label}}
+                    </label>
+                </li>
+            </ul>
+            <input class="checkedItemTxt" type="text" :value="checkedItem" required>
+            <ul class="checkItemsSub">
+                <li v-for="item in filterCheckItemsSub">
+                    <label class="app_label_sub">
+                        <input name="data_bnr_size2[]" type="checkbox" :value="item.label" v-model="checkedItemSub" @change="changesub">
+                        <span class="text">{{item.label}}</span>
+                    </label>
+                </li>
+            </ul>
+
+        </div>
+
+    </div>
+
+</dl>
+
+<script>
+//-------------------
+//媒体名を選択すると
+//-------------------
+  new Vue({
+      el: '#app',
+      data: {
+          selectItems: [{
+                  id: 1,
+                  label: "選択してください"
+              },
+          ],
+          checkItems: [{
+                  id: 2,
+                  selectId: "媒体",
+                  label2: "プラン",
+                  label: "Sプラン"
+              },
+          ],
+          checkItemsSub: [{
+                  id: 1,
+                  checkId: "プラン",
+                  label: "sプラン"
+              },
+          ],
+          selectedItem: 1,
+          checkedItem: [],
+          checkedItemSub: [],
+
+      },
+      methods: {
+          selectReset: function (e) {
+              this.checkedItem = [];
+              this.checkedItemSub = [];
+          },
+          select: function (e) {},
+          change: function (e) {
+              console.log("プラン変更");
+          },
+          changesub: function (e) {
+              console.log("画像変更");
+          },
+          showMessage2: function (e) {
+              console.log("媒体名変更");
+              this.checkedItem = [];
+              this.checkedItemSub = [];
+
+              $test = e.target.value;
+
+              if ($test == "その他") {
+                  $(".commonOther_input2").css("display", "block");
+                  $(".checkedItemTxt").removeAttr('required');
+              } else {
+                  $(".commonOther_input2").css("display", "none");
+                  $(".checkedItemTxt").attr('required');
+              }
+          },
+      },
+      //詳細情報
+      computed: {
+          filterCheckItems() {
+              let filterCheckItems = [];
+              for (let i = 0; i < this.checkItems.length; i++) {
+                  let checkItem = this.checkItems[i];
+                  if (checkItem.selectId == this.selectedItem) {
+                      filterCheckItems.push(checkItem);
+                  }
+              }
+              return filterCheckItems;
+          },
+          filterCheckItemsSub() {
+              let filterCheckItemsSub = [];
+              for (let i = 0; i < this.checkItemsSub.length; i++) {
+                  let checkItem2 = this.checkItemsSub[i];
+                  if (this.checkedItem.includes(checkItem2.checkId)) {
+                      filterCheckItemsSub.push(checkItem2);
+                  }
+              }
+              return filterCheckItemsSub;
+          },
+      },
+  });
+
+  /*画像に関する部分のvue*/
+  new Vue({
+      el: '#app2',
+      data: {
+          cities: [{
+                  "id": 1,
+                  "name": "新規作成"
+              },
+              {
+                  "id": 2,
+                  "name": "修正"
+              },
+          ],
+          wards: [{
+                  "cityId": 1,
+                  "id": 3,
+                  "name": "新規作成 媒体用画像(入稿前)",
+                  "name2": "媒体用画像(入稿前)"
+              },
+          ],
+          selectedCityId: -1,
+          selectedWardId: -1
+      },
+      methods: {
+          onChangeCity() {
+              this.selectedWardId = -1;
+              if (!this.selectedCityId) {
+                  this.selectedCityId = -1;
+              }
+          },
+          showMessage: function (e) {
+
+              $test = e.target.value;
+
+              if ($test == "新規作成 その他" || $test == "修正 その他") {
+                  $(".commonOther_input").css("display", "block");
+              } else {
+                  $(".commonOther_input").css("display", "none");
+              }
+
+          },
+      },
+      computed: {
+          filteredWards() {
+              let filteredWards = [];
+              for (let i = 0; i < this.wards.length; i++) {
+                  let ward = this.wards[i];
+                  if (ward.cityId == this.selectedCityId) {
+                      filteredWards.push(ward);
+                  }
+              }
+              return filteredWards;
+          }
+      },
+      mounted() {}
+  });
+</script>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <link rel="canonical" href="http//#">
+  <meta name="keywords" content="">
+  <meta name="robots" content="noindex,nofollow" />
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <meta name="copyright" content="Copyright">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="SKYPE_TOOLBAR" content="SKYPE_TOOLBAR_PARSER_COMPATIBLE">
+  <!--Skype対策-->
+  <!--- icon --->
+  <link rel="icon" type="image/vnd.microsoft.icon" href="./asset/images/favicon.ico">
+  <!--IE9,10-->
+  <link rel="icon" href="./asset/images/dIcon.png" sizes="180x180" type="image/png">
+  <link rel="apple-touch-icon" href="./asset/images/dIcon.png" sizes="180x180">
+  <!--- google font --->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Serif+JP:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!--- css --->
+  <link rel="stylesheet" href="./asset/css/swiper.min.css">
+  <link rel="stylesheet" href="./asset/css/style.css">
+  <!--- jquery --->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <title>title</title>
+</head>
+
+<body class="indexPage">
+
+  <header class="l-header">
+    <h1 class="l-header__title">これはサンプルです</h1>
+  </header>
+
+  <main class="l-main">
+
+    <section class="formSection c-section" id="app">
+      <h2 class="c-title">視覚的にわかるフォームテスト</h2>
+
+      <div class="">
+        <form action="">
+
+          <div class="selectedItem">
+            <select v-model="selectedItem" @change="select">
+              <option v-for="item in selectItems" :value="item.id">
+                {{ item.label }}
+              </option>
+            </select>
+          </div>
+
+          <div class="filterCheckItems">
+            <label v-for="item in filterCheckItems">
+              <input type="checkbox" :value="item.id" v-model="checkedItem" v-text="item.label" @change="change">
+              {{item.label}}
+            </label>
+          </div>
+
+          <div class="filterCheckItemsSub">
+            <label v-for="item in filterCheckItemsSub">
+              <input type="checkbox" :value="item.id" v-model="checkedItemSub" v-text="item.label" @change="changesub">
+              {{item.label}}
+            </label>
+          </div>
+
+          <div>
+            <p>結果</p>
+            <p v-text="checkedItem"></p>
+            <p v-text="checkedItemSub"></p>
+          </div>
+          <a class="selectReset" v-on:click="selectReset">リセット</a>
+
+          <div class="upFileWrap">
+            <div class="upFileWrap__uptxt">クリックしてファイルを選択、<br>またはここにドラックしてください</div>
+            <div class="inputFile">
+              <div enctype="multipart/form-data" method="post">
+                <div class="js-clear clearBtn">✖</div>
+                <input id="" type="file" name="[]" multiple>
+                <em class="thumb_img"></em>
+              </div>
+            </div>
+          </div>
+
+        </form>
+      </div>
+
+    </section>
+  </main>
+  <footer class="l-footer">
+    <p class="copyright">Copyright&copy; <a href="./">sample</a>. All Rights Reserved.</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
+  <script src="./asset/js/common.js"></script>
+  <script>
+    new Vue({
+      el: '#app',
+
+      data: {
+        selectItems: [{
+            id: 0,
+            label: "セレクト0"
+          },
+          {
+            id: 1,
+            label: "セレクト1"
+          },
+          {
+            id: 2,
+            label: "セレクト2"
+          },
+          {
+            id: 3,
+            label: "セレクト3"
+          },
+          {
+            id: 4,
+            label: "セレクト4"
+          },
+        ],
+        checkItems: [{
+            id: 1,
+            selectId: 1,
+            label: "チェック1"
+          },
+          {
+            id: 2,
+            selectId: 1,
+            label: "チェック2"
+          },
+
+          {
+            id: 3,
+            selectId: 2,
+            label: "チェック3"
+          },
+
+          {
+            id: 4,
+            selectId: 3,
+            label: "チェック4"
+          },
+          {
+            id: 5,
+            selectId: 3,
+            label: "チェック5"
+          },
+          {
+            id: 6,
+            selectId: 3,
+            label: "チェック6"
+          },
+        ],
+        checkItemsSub: [{
+            id: 1,
+            checkId: 1,
+            label: "サブチェック1"
+          },
+          {
+            id: 2,
+            checkId: 1,
+            label: "サブチェック2"
+          },
+
+          {
+            id: 3,
+            checkId: 2,
+            label: "サブチェック3"
+          },
+          {
+            id: 4,
+            checkId: 2,
+            label: "サブチェック4"
+          },
+
+          {
+            id: 5,
+            checkId: 3,
+            label: "サブチェック5"
+          },
+          {
+            id: 6,
+            checkId: 3,
+            label: "サブチェック6"
+          },
+        ],
+        selectedItem: 0,
+        checkedItem: [],
+        checkedItemSub: [],
+      },
+
+      methods: {
+        select: function (e) {},
+        change: function (e) {},
+        changesub: function (e) {},
+        selectReset: function (e) {
+          this.checkedItem = [];
+          this.checkedItemSub = [];
+        },
+      },
+
+      computed: {
+        filterCheckItems() {
+          let filterCheckItems = [];
+
+          for (let i = 0; i < this.checkItems.length; i++) {
+            let checkItem = this.checkItems[i];
+
+            console.log(checkItem);
+
+            if (checkItem.selectId == this.selectedItem) {
+              filterCheckItems.push(checkItem);
+            }
+          }
+          return filterCheckItems;
+        },
+
+        filterCheckItemsSub() {
+          let filterCheckItemsSub = [];
+
+          for (let i = 0; i < this.checkItemsSub.length; i++) {
+            let checkItem2 = this.checkItemsSub[i];
+
+            console.log(checkItem2);
+
+            if (this.checkedItem.includes(checkItem2.checkId)) {
+              filterCheckItemsSub.push(checkItem2);
+            }
+          }
+          return filterCheckItemsSub;
+        },
+      },
+
+    });
+  </script>
+</body>
+
+</html>

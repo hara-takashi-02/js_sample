@@ -1,0 +1,66 @@
+@use "../global" as g;
+/*================
+ botton
+ ================*/
+
+ .c-moreBtn{
+     color: g.$color_textSub;
+     background-color: g.$color_textSub;
+     width: 25rem;
+     height: 6rem;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     font-size: 2rem;
+     margin: 3rem auto 0;
+     padding-right: 2rem;
+     position: relative;
+     @include g.mq(md, min) {
+        font-size: 2.4rem;
+        width: 30rem;
+        height: 8rem;
+        margin: 5rem auto 0;
+    }
+
+     &::before,
+     &::after {
+    content: "";
+    position: absolute;
+    right: 3rem;
+    top: 50%;
+    transition: all 0.2s ease-in-out;
+    display: block;
+    width: 1.5rem;
+    height: 0.3rem;
+    background-color: g.$color_textSub;
+}
+&::after {
+    transform: rotate(90deg);
+}
+
+&.open:after {
+    transform: rotate(0deg);
+}
+ }
+ .c-moreBtn-content{
+     display: none;
+ }
+ .c-moreBtn{
+     span{
+         &:first-of-type{}
+         &:last-of-type{
+             display: none;
+         }
+     }
+ }
+ .c-moreBtn.open{
+    padding: 0;
+    span{
+        &:first-of-type{
+            display: none;
+        }
+        &:last-of-type{
+            display: block;
+        }
+    }
+ }

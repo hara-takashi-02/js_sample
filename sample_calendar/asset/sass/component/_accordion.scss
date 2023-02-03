@@ -1,0 +1,54 @@
+@use "../global" as g;
+
+/* ==============
+// accordion
+================= */
+
+.c-accordion {
+    position: relative;
+    width: 100%;
+    border-top: none;
+    outline: 0;
+    cursor: pointer
+}
+
+.c-accordion__title {
+    display: block;
+    position: relative;
+    margin: 0;
+    padding: 1.5rem 3rem 1.5rem 5rem;
+    font-weight: normal;
+    color: #fff;
+    background: #000;
+    cursor: pointer;
+}
+
+.c-accordion__title::before,
+.c-accordion__title::after {
+    content: "";
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transition: all 0.2s ease-in-out;
+    display: block;
+    width: 1.5rem;
+    height: 0.3rem;
+    background-color: #fff;
+    @include g.mq(md, min) {
+        width: 2.5rem;
+        height: 0.2rem;
+        right: 2rem;
+    }
+}
+.c-accordion__title::after {
+    transform: rotate(90deg);
+}
+
+.c-accordion__title.open:after {
+    transform: rotate(0deg);
+}
+
+.c-accordion__content {
+    display: none;
+    padding-left: 1rem;
+}

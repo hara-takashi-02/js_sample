@@ -1,0 +1,87 @@
+@use "../global" as g;
+/*================
+ nav
+ ================*/
+
+ // c-burgerBtn
+.c-burgerBtn {
+    background: transparent;
+    display: flex;
+    position: fixed;
+    z-index: 3;
+    top: 0;
+    right: 0;
+    width: 5rem;
+    height: 5rem;
+    justify-content: center;
+    align-items: center;
+  
+    div {
+      width: 50%;
+      height: 35%;
+      position: relative;
+    }
+  
+    span {
+      background: #000;
+      display: block;
+      position: absolute;
+      width: 100%;
+      height: 0.1rem;
+      transition: all .5s;
+  
+      &:nth-child(1) {
+        top: 0%;
+      }
+  
+      &:nth-child(2) {
+        top: 50%;
+      }
+  
+      &:nth-child(3) {
+        top: 100%;
+      }
+    }
+  }
+  
+  .c-burgerBtn.open {
+    span {
+      &:nth-child(1) {
+        transform: translate(0, .9rem) rotate(-45deg);
+      }
+  
+      &:nth-child(2) {
+        opacity: 0;
+      }
+  
+      &:nth-child(3) {
+        transform: translate(0, -.9rem) rotate(45deg);
+      }
+    }
+  }
+  
+  // c-burgerMenu
+  .c-burgerMenu {
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: -100%;
+    background: #fff;
+    transition: .7s;
+  }
+  .c-burgerMenu.open {
+    left: 0;
+    transition: .7s;
+  }
+  .c-burgerMenu-inner{
+    padding: 5rem 2.5rem 2.5rem;
+    overflow: scroll;
+    height: 100%;
+    ul{
+      li{
+        padding: 1rem 0;
+      }
+    }
+  }

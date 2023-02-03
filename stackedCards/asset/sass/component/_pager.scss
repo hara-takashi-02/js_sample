@@ -1,0 +1,91 @@
+@use "../global" as g;
+/*================
+ pager
+ ================*/
+ 
+.pager {
+  margin: 2rem auto 5rem;
+  .nav-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  a,
+  span {
+    margin: 0.2rem;
+    width: 3rem;
+    height: 4rem;
+    background: g.$color_accentWhite;
+    border: 0.1rem solid g.$color_accent;
+    display: block;
+    color: #000;
+    font-size: 1.6rem;
+    font-weight: g.$medium;
+    line-height: 3.8rem;
+    text-decoration: none;
+    text-align: center;
+    transition: 0.3s;
+    &.prev {
+      margin: 0.2rem 2.2rem 0.2rem 0.2rem;
+      width: 3rem;
+      height: 3rem;
+      background: g.$color_accent;
+      position: relative;
+      color: g.$color_textSub;
+      border: 0.1rem solid g.$color_accentWhite;
+      &:after {
+        margin: auto;
+        width: 0.8rem;
+        height: 0.8rem;
+        border-bottom: 0.1rem solid g.$color_accentWhite;
+        border-left: 0.1rem solid g.$color_accentWhite;
+        position: absolute;
+        content: "";
+        top: 0;
+        right: -0.2rem;
+        bottom: 0;
+        left: 0;
+        transform: rotate(45deg);
+      }
+    }
+    &.next {
+      margin: 0.2rem 0.2rem 0.2rem 2.2rem;
+      width: 3rem;
+      height: 3rem;
+      background: g.$color_accent;
+      position: relative;
+      color: g.$color_textSub;
+      border: 0.1rem solid g.$color_accentWhite;
+      &:after {
+        margin: auto;
+        width: 0.8rem;
+        height: 0.8rem;
+        border-top: 0.1rem solid g.$color_accentWhite;
+        border-right: 0.1rem solid g.$color_accentWhite;
+        position: absolute;
+        content: "";
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: -0.2rem;
+        transform: rotate(45deg);
+      }
+    }
+    &.dots {
+      border: none;
+      position: relative;
+    }
+  }
+  a:hover {
+    background: g.$color_accent;
+    color: g.$color_textSub;
+  }
+  .current {
+    background: g.$color_accent;
+    border: 0.1rem solid g.$color_accent;
+    color: g.$color_textSub;
+  }
+  .dots {
+    background: none;
+  }
+}

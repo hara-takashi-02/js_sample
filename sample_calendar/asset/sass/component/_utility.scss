@@ -1,0 +1,23 @@
+@use "../global" as g;
+/*================
+ utility
+ ================*/
+
+ .u-inline{
+     display: inline-block;
+ }
+
+ .u-md-hidden {
+    display: block;
+
+    @include g.mq(md, min) {
+        display: none;
+    }
+}
+.u-md-visible {
+    display: none;
+
+    @include g.mq(md, min) {
+        display: block;
+    }
+}

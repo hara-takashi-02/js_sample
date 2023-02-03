@@ -1,0 +1,88 @@
+@use "../global"as g;
+
+/*================
+ form
+ ================*/
+
+//modal共通
+.c-modal {
+  display: none;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 2;
+}
+
+.c-modal-bg {
+  background: rgba(0, 0, 0, 0.8);
+  height: 100vh;
+  position: absolute;
+  width: 100%;
+}
+
+.c-modal-content {
+  width: 100%;
+  //height: 100%;
+
+  background: transparent;
+  left: 50%;
+  padding: 5px;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  @include g.mq(sm, min) {
+    width: 90%;
+  }
+
+  @include g.mq(xl, min) {
+    width: 60%;
+  }
+}
+
+//中身
+.c-modalAeia {
+  background: #fff;
+  border-radius: 2rem;
+  max-height: calc(100% - 10rem);
+  overflow: auto;
+
+  .form-control {
+    padding: .5rem;
+    border: none;
+  }
+
+  .form-select {
+    padding: .5rem 0;
+    border: none;
+  }
+
+}
+
+.c-modalAeia-inner {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 4.4rem 1rem;
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+
+.c-modalAeia-title {
+  font-size: 25px;
+  font-weight: 600;
+}
+
+.c-modal-close {
+  background: #fff;
+  padding: .5rem 1rem;
+  border-radius: 2rem;
+  display: block;
+  width: fit-content;
+  margin-right: 0;
+  margin-left: auto;
+}
+
+.js-modal-open.is-hidden {
+  display: none;
+}

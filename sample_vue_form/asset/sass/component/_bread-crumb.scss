@@ -1,0 +1,26 @@
+@use "../global"as g;
+/*================
+ breadClumb
+ ================*/
+
+.c-breadcrumb {
+  margin: 1rem;
+  display: flex;
+  flex-flow: row wrap;
+
+  li {
+    color: g.$color_link;
+    font-size: 1.2rem;
+    font-weight: g.$regular;
+
+    a {
+      color: g.$color_link;
+    }
+
+    &:last-child {
+      a {
+        color: g.$color_text;
+      }
+    }
+  }
+}

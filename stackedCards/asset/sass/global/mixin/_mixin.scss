@@ -1,0 +1,457 @@
+@charset "utf-8";
+
+//-----------------------------
+// @extend / @mixin専用ファイル
+//-----------------------------
+// テキスト非表示
+//-----------------------------
+
+%off {
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/*clear fix*/
+@mixin clearfix {
+  &:after {
+    display: block;
+    visibility: hidden;
+    clear: both;
+    height: 0;
+    content: "";
+  }
+}
+
+%cf {
+  &:after {
+    display: block;
+    visibility: hidden;
+    clear: both;
+    height: 0;
+    content: "";
+  }
+}
+
+@mixin cf {
+  &:after {
+    display: block;
+    visibility: hidden;
+    clear: both;
+    height: 0;
+    content: "";
+  }
+}
+
+// ====================================================================
+// 関数名: linkIcon
+// --------------------------------------------------------------------
+// 概要: スマホサイトでよく見る、リストの矢印
+// 引数:
+//   $color_text:        矢印のカラー
+// 使用例: @include linkIcon(#fff)
+// 引用元: http://book.scss.jp/code/c5/04.html
+// 備考: $setPrefixと合わせて使用
+// ====================================================================
+@mixin linkIcon($color_text: #333) {
+  $setPrefix: -webkit-, -moz-, -o-, null;
+  &:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    width: 10px;
+    height: 10px;
+    margin-top: -7px;
+    border-top: 3px solid $color_text;
+    border-right: 3px solid $color_text;
+    @each $prefix in $setPrefix {
+      #{$prefix}-webkit-transform: rotate(45deg);
+      transform: rotate(45deg);
+    }
+  }
+}
+
+@mixin a_color {
+  text-decoration: none;
+  color: #000;
+}
+
+// リンクカラーを一括設定
+@mixin linkColor($color_text) {
+  color: $color_text;
+  &:hover,
+  &:active,
+  &:focus {
+    color: lighten($color_text, 20%);
+  }
+}
+
+@mixin line-clamp($maxLines: 2) {
+  position: relative;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $maxLines;
+}
+%line-clamp-ellipsis {
+  min-width: 30px;
+  content: "\2026";
+  position: absolute;
+  right: 0;
+  background: #fff;
+}
+
+%line-clamp-filler {
+  $whitespace: "";
+  @for $i from 1 through 1024 {
+    $whitespace: $whitespace + "  ";
+  }
+  content: $whitespace;
+  display: inline;
+  letter-spacing: 1em;
+  position: relative;
+  z-index: 1;
+  font-size: 75%;
+}
+
+// ====================================================================
+// 関数名: yoko, tate
+// --------------------------------------------------------------------
+// 概要: デバイスの縦横判定
+// 引数: なし
+// 使用例: @include tate { width: 100%; },@include yoko { width: 25%; }
+// 引用元: http://book.scss.jp/code/c5/04.html
+// 備考:
+// ====================================================================
+@mixin yoko {
+  @media all and (orientation: landscape) {
+    @content;
+  }
+}
+@mixin tate {
+  @media all and (orientation: portrait) {
+    @content;
+  }
+}
+
+// ====================================================================
+// 関数名: fluid-type
+// --------------------------------------------------------------------
+//; 概要: レスポンシブなフォントサイズ
+//; 使用例: @include fluid-type($min_font, $max_font, $min_width, $max_width);
+// @include fluid-type(12px, 48px, 320px, 1920px);
+// =>320px〜1920px間でフォントサイズが最小12px〜最大48pxに変化
+// ====================================================================
+
+@mixin fluid-type($min-font-size, $max-font-size, $lower-range, $upper-range) {
+  font-size: calc(
+    #{$min-font-size} + #{(($max-font-size / ($max-font-size * 0 + 1)) - ($min-font-size / ($min-font-size * 0 + 1)))} *
+      (
+        (100vw - #{$lower-range}) / #{(
+            ($upper-range / ($upper-range * 0 + 1)) - ($lower-range / ($lower-range * 0 + 1))
+          )}
+      )
+  );
+
+  @media screen and (max-width: $lower-range) {
+    font-size: $min-font-size;
+  }
+  @media screen and (min-width: $upper-range) {
+    font-size: $max-font-size;
+  }
+}
+
+// ====================================================================
+// 関数名: media
+// --------------------------------------------------------------------
+// usage
+// @include mq{...} => @media screen and (min-width: 768px){...} デフォルトはmd
+// @include mq(lg){...} => @media screen and (min-width: 1024px){...}
+// @include mq(sm,max){...} => @media screen and (max-width: 600px){...}
+// @include mq(sm,max,true){...} => @media screen and (min-width: 767px){...} 第３引数trueで1pxマイナスになる
+// @include mq{...@include mq(lg,max,true){...}} => @media screen and (min-width: 768px) and (max-width: 1023px)
+// ====================================================================
+/*
+$mq-breakpoints: (
+    xs3: 320px,
+    xs2: 375px,
+    xs: 414px,
+    sm: 576px,
+    md: 768px,
+    lg: 992px,
+    xl: 1200px,
+    xl2: 1280px,
+    xl3: 1366px,
+);
+*/
+$mq-breakpoints: (
+  xs3: 320px,
+  xs2: 375px,
+  xs: 414px,
+  sm: 576px,
+  md: 768px,
+  lg: 1000px,
+  xl: 1200px,
+  xl2: 1300px,
+  xl3: 1400px,
+);
+
+@mixin mq($breakpoint: md, $rule: min, $subtraction: false) {
+  $breakpoint: map_get($mq-breakpoints, $breakpoint);
+  @if $rule == max and $subtraction {
+    $breakpoint: $breakpoint - 1;
+  }
+  @if $rule == min and $subtraction {
+    $breakpoint: $breakpoint + 1;
+  }
+  @media screen and (#{$rule}-width: $breakpoint) {
+    @content;
+  }
+}
+
+//------------------
+// 複数行三点リーダー
+// @include abridgement(行間,文字数,表示したい行数,#背景色);
+//------------------
+@mixin abridgement($line-height, $font-size, $lines, $color) {
+  line-height: $line-height;
+  max-height: $font-size * $line-height * $lines + px;
+  overflow: hidden;
+  position: relative;
+  word-break: break-all;
+  text-align: justify;
+  &:before,
+  &:after {
+    position: absolute;
+  }
+  &:before {
+    content: "...";
+    background: $color;
+    right: 0px;
+    text-align: center;
+    width: 1.2em !important;
+    top: $font-size * $line-height * ($lines - 1) + px;
+    //z-index: 3;
+  }
+  &:after {
+    content: "";
+    height: 100%;
+    width: 100%;
+    background: 0px;
+    //z-index: 2;
+    background: $color;
+  }
+}
+// ====================================================================
+// 関数名: parseInt
+// --------------------------------------------------------------------
+// 概要: 単位を外す関数
+// 引数:
+//   val: PC幅〜タブレット幅（1024px〜768px）
+// 使用例:
+//   //フォントサイズ指定 (rem)のmixin
+//   @mixin font-size-rem($size) {
+//     font-size: parseInt($size) + px;
+//     font-size: (parseInt($size) / 10) * 1rem;
+//   }
+// 引用元: http://c-brains.jp/blog/wsg/13/05/27-174103.php
+// 備考:
+// ====================================================================
+
+@function parseInt($val) {
+  @return $val / (1 + $val - $val);
+}
+
+//------------------
+// position
+//------------------
+@mixin position($position, $top: null, $right: null, $bottom: null, $left: null) {
+  position: $position;
+  top: $top;
+  right: $right;
+  bottom: $bottom;
+  left: $left;
+}
+
+//-----------------------------
+// リンクテキストの下線スタイル
+// a { @include txtLine(line);} //常に下線あり
+// a { @include txtLine(hLine);} //hover時に下線あり
+// a { @include txtLine(hNoLine);} //hover時に下線なし
+// a { @include txtLine(noLine);} //常に下線無し
+//-----------------------------
+@mixin txtLine($style) {
+  @if $style==line {
+    text-decoration: underline;
+    &:hover {
+      text-decoration: underline;
+    }
+  } @else if $style==hLine {
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  } @else if $style==hNoLine {
+    text-decoration: underline;
+    &:hover {
+      text-decoration: none;
+    }
+  } @else if $style==noLine {
+    text-decoration: none;
+    &:hover,
+    &:focus {
+      text-decoration: none;
+    }
+  }
+}
+
+/*
+ * Mixin for placeholder
+ * @include placeholderColor(#00ff00);
+ */
+@mixin placeholderColor($color_text) {
+  &:placeholder-shown {
+    color: $color_text !important;
+  }
+  &::-webkit-input-placeholder {
+    color: $color_text !important;
+  }
+  &:-moz-placeholder {
+    color: $color_text !important;
+    opacity: 1;
+  }
+  &::-moz-placeholder {
+    color: $color_text !important;
+    opacity: 1;
+  }
+  &:-ms-input-placeholder {
+    color: $color_text !important;
+  }
+  &::-ms-input-placeholder {
+    color: $color_text !important;
+  }
+}
+
+//-----------------------------
+// 背景グラデーション
+// @include bg-gradient(-90deg, #CCC, 5%);
+//-----------------------------
+@mixin bg-gradient($angle: 180deg, $color: #0bd, $amount: 20%) {
+  background: linear-gradient($angle, $color, lighten($color, $amount)) fixed;
+}
+
+@mixin bg-gradient2($angle: 180deg, $color: #0bd, $amount: 20%) {
+  background: linear-gradient($angle, $color, adjust-hue($color, $amount));
+}
+
+//------------------
+// linear-gradient
+//------------------
+@mixin linear-gradient($from, $to) {
+  //background: $to;
+  //background: -moz-linear-gradient(top, $from 0%, $to 100%);
+  //background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,$from), color-stop(100%,$to));
+  //background: -webkit-linear-gradient(top, $from 0%,$to 100%);
+  //background: -o-linear-gradient(top, $from 0%,$to 100%);
+  background: linear-gradient(to left, $from 0%, $to 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#{$from}, endColorstr=#{$to});
+}
+
+//@mixin linear-gradient($from, $to) {
+//    background: $to;
+//    background: -moz-linear-gradient(top, $from 0%, $to 100%);
+//    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,$from), color-stop(100%,$to));
+//    background: -webkit-linear-gradient(top, $from 0%,$to 100%);
+//    background: -o-linear-gradient(top, $from 0%,$to 100%);
+//    background: linear-gradient(to bottom, $from 0%,$to 100%);
+//    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#{$from}, endColorstr=#{$to})
+//}
+
+//@include linear-gradient($lg_blue_From, $lg_blue_To);
+
+//@include placeholderColor(#00ff00);
+@mixin linearGradient($top, $bottom) {
+  background: $top; /* Old browsers */ /* FF3.6+ */ /* Chrome,Safari4+ */ /* Chrome10+,Safari5.1+ */ /* Opera 11.10+ */ /* IE10+ */
+  background: -webkit-gradient(linear, left top, left bottom, from($top), to($bottom));
+  background: linear-gradient(to bottom, $top 0%, $bottom 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#000000',GradientType=0 ); /* IE6-9 */
+}
+
+//.button{
+//    @include linearGradient(#cccccc, #666666);
+//}
+
+@mixin gradient($from, $to) {
+  background: -moz-linear-gradient(top, $from, $to);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$from}', endColorstr='#{$to}');
+}
+
+// -----------------------------
+// エイリアス
+// .dark-on-light {
+//     @include font-smoothing(off);
+// }
+// .light-on-dark {
+//     @include font-smoothing(on);
+// }
+// -----------------------------
+@mixin font-smoothing($value: on) {
+  @if $value==on {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  } @else {
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+  }
+}
+
+//-----------------------------
+// アニメーションプロパティ
+//-----------------------------
+@mixin animation($animation-name) {
+  -webkit-animation: $animation-name;
+  -moz-animation: $animation-name;
+  animation: $animation-name;
+  -webkit-animation-fill-mode: both;
+  -moz-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+//-----------------------------
+// アニメーション用 keyframes
+//-----------------------------
+@mixin keyframes($animation-name: animaton) {
+  @-webkit-keyframes #{$animation-name} {
+    @content;
+  }
+  @-moz-keyframes #{$animation-name} {
+    @content;
+  }
+  @keyframes #{$animation-name} {
+    @content;
+  }
+}
+
+//-----------------------------
+// テキスト上下の余白削除
+// lineHeightCrop（line-heightの不要な余白を打ち消す）のmixinのコード。
+//-----------------------------
+
+@mixin lineHeightCrop($line-height) {
+  &::before {
+    display: block;
+    width: 0;
+    height: 0;
+    margin-top: calc((1 - #{$line-height}) * 0.5em);
+    content: "";
+  }
+  &::after {
+    display: block;
+    width: 0;
+    height: 0;
+    margin-bottom: calc((1 - #{$line-height}) * 0.5em);
+    content: "";
+  }
+}

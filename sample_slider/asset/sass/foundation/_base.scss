@@ -1,0 +1,94 @@
+@use "../global" as g;
+/*================
+ base
+ ================*/
+ 
+ html {
+  font-size: 62.5%;
+}
+
+html,
+body {
+  //height: 100%;
+  &.is-noScroll {
+    overflow-y: hidden;
+  }
+}
+
+body {
+  font-size: 1.4rem;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  position: relative;
+  color: g.$color_text;
+  font-family: g.$font-family-sans;
+  font-weight: g.$regular;
+  @include g.mq(md, min) {
+    font-size: 1.8rem;
+  }
+}
+
+ul,ol {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  li {
+    color: g.$color_text;
+  }
+}
+a {
+  text-decoration: none;
+  color: g.$color_link;
+  transition: all 0.1s ease;
+  &:hover {
+    text-decoration: none;
+  }
+  img {
+    transition: all 0.3s ease;
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+  &:focus {
+    outline: none;
+  }
+}
+
+img {
+  max-width: 100%;
+  margin: auto;
+  vertical-align: top;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  color: g.$color_text;
+  font-weight: g.$regular;
+  line-height: inherit;
+  @include g.font-smoothing();
+}
+
+p {
+  color: g.$color_text;
+  line-height: 2;
+}
+
+span {
+  word-break: break-word;
+}
+
+th,
+td {
+  word-break: break-all;
+}
+
+input,
+textarea {
+  font-weight: normal;
+  @include g.placeholderColor(g.$color_placeholder);
+  @include g.font-smoothing();
+}

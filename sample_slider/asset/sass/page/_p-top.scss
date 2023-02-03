@@ -1,0 +1,53 @@
+@use "../global"as g;
+
+/*================
+top
+ ================*/
+//indexPage
+.js-slider {
+    position: relative;
+    height: 300px;
+    overflow: hidden;
+  }
+  .js-slider img {
+    max-width: initial;
+    width: 130%;
+    position: absolute;
+    opacity: 0;
+    transition: 2s;
+  }
+  .js-slider img.active {
+    opacity: 1;
+    transition: 2s;
+  }
+
+  .js-slider .js-slider__moveleft{
+    right: 0;
+  }
+  .js-slider .js-slider__movetop{
+    bottom: 0;
+  }
+
+  .js-slider .js-slider__moveleft.active_move{
+    animation: animMoveleft 40s;
+  }
+  @keyframes animMoveleft {
+    0% {
+    transform: translateX(0);
+    }
+    100% {
+    transform: translateX(30%);
+    }
+  }
+
+  .js-slider .js-slider__movetop.active_move{
+    animation: animMovetop 40s;
+  }
+  @keyframes animMovetop {
+    0% {
+    transform: translateY(30%);
+    }
+    100% {
+    transform: translateY(0);
+    }
+  }
