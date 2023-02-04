@@ -13,7 +13,7 @@ https://ithigan.com/js_sample_calendar/
 https://ithigan.com/js_sample_slider/  
 
 3:sample_task 
-タスク風DOM操作
+タスク風DOM操作  
 https://ithigan.com/js_sample_task/  
 
 4:sample_vue_form  
