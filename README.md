@@ -12,7 +12,7 @@ https://ithigan.com/js_sample_calendar/
 なめらかな切り替えのシンプルなスライドショー  
 https://ithigan.com/js_sample_slider/  
 
-3:sample_task 
+3:sample_task  
 タスク風DOM操作  
 https://ithigan.com/js_sample_task/  
 
