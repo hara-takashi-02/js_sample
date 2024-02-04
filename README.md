@@ -6,20 +6,20 @@
 
 1:sample_calendar  
 シンプルなカレンダー  
-https://ithigan.com/js_sample_calendar/  
+http://samples.createsystems.net/js_sample_calendar/  
 
 2:sample_slider  
 なめらかな切り替えのシンプルなスライドショー  
-https://ithigan.com/js_sample_slider/  
+http://samples.createsystems.net/js_sample_slider/  
 
 3:sample_task  
 タスク風DOM操作  
-https://ithigan.com/js_sample_task/  
+http://samples.createsystems.net/js_sample_task/  
 
 4:sample_vue_form  
 実務で便利なvueのフォームと視覚的にわかりやすい画像input  
-https://ithigan.com/js_sample_vue_form/  
+http://samples.createsystems.net/js_sample_vue_form/  
 
 5:stackedCards  
 カード風の画像スライドショー  
-https://ithigan.com/js_sample_stackedCards/  
+http://samples.createsystems.net/js_sample_stackedCards/  
